@@ -34,6 +34,8 @@ export default function Home (props) {
 
 export async function getStaticProps () {
 
+    console.log ('processing...');
+
     // construct a filepath // cwd is at ./ of project
     const filePath = path.join (process.cwd (), 'data', 'dummy-backend.json');
     // fs/promise returns a promise, thus await can be used here
@@ -41,12 +43,18 @@ export async function getStaticProps () {
     // convert to a JSON object
     const data = JSON.parse (jsonData);
 
-    console.log ('processing...');
+
 
     // getStaticProps() will always need to return an object
     return {
         props: {
             products: data.products,
         },
+        // revalidate: will regenerate on every request, at MOST every X seconds
+        // if page is refreshed before revalidation time, it will serve the old data
+        // BUT
+        // if page request is made it will always generate, store, and serve the NEW page -
+        // development_server will always regenerate data as a new request -
+        revalidate: 10
     };
 }
