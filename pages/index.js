@@ -21,9 +21,7 @@ export default function Home (props) {
         <main className={ styles.main }>
             <ul>
                 { products.map ((product) => {
-                    return (
-                        <li key={ product.id }>{ product.title }</li>
-                    )
+                    return (<li key={ product.id }>{ product.title }</li>)
                 }) }
             </ul>
         </main>
@@ -39,9 +37,9 @@ export async function getStaticProps () {
     // construct a filepath // cwd is at ./ of project
     const filePath = path.join (process.cwd (), 'data', 'dummy-backend.json');
     // fs/promise returns a promise, thus await can be used here
-    const jsonData = await fs.readFile(filePath);
+    const jsonData = await fs.readFile (filePath);
     // convert to a JSON object
-    const data = JSON.parse (jsonData)
+    const data = JSON.parse (jsonData);
 
     console.log ('processing...');
 
