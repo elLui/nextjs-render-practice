@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs/promises';
-import { Fragment } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function ProductDetailPage (props) {
@@ -50,6 +49,9 @@ export async function getStaticPaths () {
             { params: { pid: 'p4' } },
             { params: { pid: 'p5' } },
         ],
+        // fallback: true - will only pre-generate pages specified in paths: yet will allow us to access other pages not defined
+        // within paths: by making calls to the data just in time -
+        // in this example p1 && p2 are pre-rendered // calls to p3,p4,p5 are not generated until they are called upon
         fallback: false
     }
 
