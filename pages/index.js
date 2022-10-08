@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 // server side - however, using it in our getStaticProps() function it will run on the server side
 import fs from 'fs/promises';
 import path from 'path';
+import Link from "next/link";
 
 export default function Home (props) {
 
@@ -21,7 +22,7 @@ export default function Home (props) {
         <main className={ styles.main }>
             <ul>
                 { products.map ((product) => {
-                    return (<li key={ product.id }>{ product.title }</li>)
+                    return (<li key={ product.id }><Link href={ `/${ product.id }` }>{ product.title }</Link></li>)
                 }) }
             </ul>
         </main>
@@ -34,7 +35,7 @@ export default function Home (props) {
 
 export async function getStaticProps () {
 
-    console.log ('processing...');
+    // console.log ('processing...');
 
     // construct a filepath // cwd is at ./ of project
     const filePath = path.join (process.cwd (), 'data', 'dummy-backend.json');
@@ -42,9 +43,6 @@ export async function getStaticProps () {
     const jsonData = await fs.readFile (filePath);
     // convert to a JSON object
     const data = JSON.parse (jsonData);
-
-
-
 
     // another useful key is redirect: - accepts an object with destination: "x"; as below
     if (!data) {
@@ -55,15 +53,10 @@ export async function getStaticProps () {
         }
     }
 
-
-
     // you can also use the notFound: key to dictate actions
     // failure to retrieve the data could be caught as :: the notFound: true will direct the user to the 404 page
     if (data.products.length === 0) {
         return { notFound: true };
-
-
-
     }
 
 

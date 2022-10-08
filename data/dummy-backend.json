@@ -2,23 +2,28 @@
   "products": [
     {
       "id": "p1",
-      "title": "product 1"
+      "title": "product 1",
+      "description": "product_description 1"
     },
     {
       "id": "p2",
-      "title": "product 2"
+      "title": "product 2",
+      "description":  "product_description 2"
     },
     {
       "id": "p3",
-      "title": "product 3"
+      "title": "product 3",
+      "description":  "product_description 3"
     },
     {
       "id": "p4",
-      "title": "product 4"
+      "title": "product 4",
+      "description":  "product_description 4"
     },
     {
       "id": "p5",
-      "title": "product 5"
+      "title": "product 5",
+      "description":  "product_description 5"
     }
   ]
 }
