@@ -6,6 +6,12 @@ export default function ProductDetailPage (props) {
 
     const { loadedProduct } = props;
 
+    if (!loadedProduct) {
+        return (
+            <p>Loading...</p>
+        )
+    }
+
     return (<div className={ styles.container }>
             <div className={ styles.main }>
                 <h1>{ loadedProduct.title }</h1>
@@ -45,14 +51,14 @@ export async function getStaticPaths () {
         paths: [
             { params: { pid: 'p1' } },
             { params: { pid: 'p2' } },
-            { params: { pid: 'p3' } },
-            { params: { pid: 'p4' } },
-            { params: { pid: 'p5' } },
+            // { params: { pid: 'p3' } },
+            // { params: { pid: 'p4' } },
+            // { params: { pid: 'p5' } },
         ],
         // fallback: true - will only pre-generate pages specified in paths: yet will allow us to access other pages not defined
         // within paths: by making calls to the data just in time -
         // in this example p1 && p2 are pre-rendered // calls to p3,p4,p5 are not generated until they are called upon
-        fallback: false
+        fallback: true
     }
 
 }
