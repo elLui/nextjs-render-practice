@@ -45,16 +45,38 @@ export async function getStaticProps () {
 
 
 
+
+    // another useful key is redirect: - accepts an object with destination: "x"; as below
+    if (!data) {
+        return {
+            redirect: {
+                destination: "/"
+            }
+        }
+    }
+
+
+
+    // you can also use the notFound: key to dictate actions
+    // failure to retrieve the data could be caught as :: the notFound: true will direct the user to the 404 page
+    if (data.products.length === 0) {
+        return { notFound: true };
+
+
+
+    }
+
+
     // getStaticProps() will always need to return an object
     return {
         props: {
             products: data.products,
-        },
-        // revalidate: will regenerate on every request, at MOST every X seconds
+        }, // revalidate: will regenerate on every request, at MOST every X seconds
         // if page is refreshed before revalidation time, it will serve the old data
         // BUT
         // if page request is made it will always generate, store, and serve the NEW page -
         // development_server will always regenerate data as a new request -
-        revalidate: 10
+        revalidate: 10, // keyword will direct the path to a 404.html page if data is not found
+        // notFound: true,
     };
 }
