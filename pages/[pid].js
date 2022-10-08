@@ -1,16 +1,18 @@
 import path from 'path';
 import fs from 'fs/promises';
 import { Fragment } from "react";
+import styles from "../styles/Home.module.css";
 
 export default function ProductDetailPage (props) {
 
     const { loadedProduct } = props;
 
-    return (
-        <Fragment>
-            <h1>{ loadedProduct.title }</h1>
-            <p>{ loadedProduct.description }</p>
-        </Fragment>
+    return (<div className={ styles.container }>
+            <div className={ styles.main }>
+                <h1>{ loadedProduct.title }</h1>
+                <p>{ loadedProduct.description }</p>
+            </div>
+        </div>
     )
 }
 
@@ -21,7 +23,6 @@ export async function getStaticProps (context) {
     const { params } = context;
 
     const productId = params.pid;
-    c
 
     console.log (productId);
 
@@ -36,4 +37,20 @@ export async function getStaticProps (context) {
             loadedProduct: product
         }
     }
+}
+
+// tells next.js what productId should be generated
+export async function getStaticPaths () {
+
+    return {
+        paths: [
+            { params: { pid: 'p1' } },
+            { params: { pid: 'p2' } },
+            { params: { pid: 'p3' } },
+            { params: { pid: 'p4' } },
+            { params: { pid: 'p5' } },
+        ],
+        fallback: false
+    }
+
 }
