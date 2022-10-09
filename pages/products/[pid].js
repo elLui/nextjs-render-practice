@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
 export default function ProductDetailPage (props) {
 
