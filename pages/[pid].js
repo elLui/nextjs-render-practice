@@ -18,13 +18,10 @@ export default function ProductDetailPage (props) {
     </div>)
 }
 
-
 async function getData () {
     const filePath = path.join (process.cwd (), 'data', 'dummy-backend.json');
     const jsonData = await fs.readFile (filePath);
-    const data = JSON.parse (jsonData);
-
-    return data;
+    return JSON.parse (jsonData);
 }
 
 // context can be used
@@ -32,9 +29,15 @@ export async function getStaticProps (context) {
     // params holds a dictionary of key:value pairs
     const { params } = context;
     const productId = params.pid;
-    console.log (productId);
     const data = await getData ();
     const product = data.products.find (product => product.id === productId);
+
+    if (!product) {
+        return {
+            notFound: true,
+        }
+    }
+
     return {
         props: {
             loadedProduct: product
@@ -45,24 +48,22 @@ export async function getStaticProps (context) {
 // tells next.js what productId should be generated
 export async function getStaticPaths () {
 
-    const data = await getData();
-    const ids = data.products.map((product) => product.id);
-    const pathWithParams = ids.map(id => ({params: {pid: id}}))
+    const data = await getData ();
+    const ids = data.products.map ((product) => product.id);
+    const pathWithParams = ids.map (id => ({ params: { pid: id } }))
 
 
     return {
         paths: pathWithParams,
-
+        fallback: true
         // paths: [ { params: { pid: 'p1' } }, { params: { pid: 'p2' } }, // { params: { pid: 'p3' } },
-            // { params: { pid: 'p4' } },
-            // { params: { pid: 'p5' } },]
+        // { params: { pid: 'p4' } },
+        // { params: { pid: 'p5' } },]
         // fallback: true - will only pre-generate pages specified in paths: yet will allow us to access other pages not defined
         // within paths: by making calls to the data just in time -
         // in this example p1 && p2 are pre-rendered // calls to p3,p4,p5 are not generated until they are called upon
-        // fallback: true
         // setting fallback: 'blacking' allows us to serve pages without a 'loading...' screen -
-        fallback: 'blocking'
-
+        // fallback: 'blocking'
     }
 
 }
